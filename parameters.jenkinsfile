@@ -68,7 +68,9 @@ pipeline
             {
                 script
                 {
-                    def emptyPrev = Jenkins.instance.getItem("${env.JOB_NAME}").lastSuccessfulBuild.actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'EMPTY'}?.value
+                    // def emptyPrev = Jenkins.instance.getItem("${env.JOB_NAME}").lastSuccessfulBuild.actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'EMPTY'}?.value
+                    def emptyPrev = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'EMPTY'}?.value
+
                     echo("o_O [${emptyPrev}]")
                 }
             }
