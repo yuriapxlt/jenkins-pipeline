@@ -16,6 +16,9 @@ pipeline
         string(name: 'EMPTY', defaultValue: '', description: 'If this is empty, fail build')
 
         booleanParam(name: 'ACCEPT', defaultValue: false, description: 'desc')
+
+        string(name: 'CAUSE', defaultValue: 'anonymous', description: 'Build Cause')
+
     }
     stages {
         stage('Print') {
@@ -32,23 +35,31 @@ pipeline
                 echo "Password: ${params.PASSWORD}"
             }
         }
-        stage('Test')
-        {
-            steps
-            {
-                script
-                {
-                    if ("${params.EMPTY}" == "")
-                    {
-                        error("params.EMPTY shouln't be so empty")
-                    }
-                    else
-                    {
-                        echo("params.EMPTY: [${params.EMPTY}]")
-                    }
+        stage('Test Previous Build Status') {
+            steps {
+                script {
+                    def lastSuccessfulBuildParams = Jenkins.instance.getItem("${env.JOB_NAME}").lastSuccessfulBuild.actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'CAUSE'}?.value
+                    echo "${lastSuccessfulBuildParams}"
                 }
             }
         }
+        // stage('Test')
+        // {
+        //     steps
+        //     {
+        //         script
+        //         {
+        //             if ("${params.EMPTY}" == "")
+        //             {
+        //                 error("params.EMPTY shouln't be so empty")
+        //             }
+        //             else
+        //             {
+        //                 echo("params.EMPTY: [${params.EMPTY}]")
+        //             }
+        //         }
+        //     }
+        // }
         stage('Accept')
         {
             steps
@@ -68,8 +79,8 @@ pipeline
             {
                 script
                 {
-                    // def emptyPrev = Jenkins.instance.getItem("${env.JOB_NAME}").lastSuccessfulBuild.actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'EMPTY'}?.value
-                    def emptyPrev = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'EMPTY'}?.value
+                    def emptyPrev = Jenkins.instance.getItem("${env.JOB_NAME}").lastSuccessfulBuild.actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'EMPTY'}?.value
+                    // def emptyPrev = currentBuild.getPreviousBuild().getRawBuild().actions.find{ it instanceof ParametersAction }?.parameters.find{it.name == 'EMPTY'}?.value
 
                     echo("o_O [${emptyPrev}]")
                 }
