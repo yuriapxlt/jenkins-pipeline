@@ -14,6 +14,8 @@ pipeline
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
 
         string(name: 'EMPTY', defaultValue: '', description: 'If this is empty, fail build')
+
+        booleanParam(name: 'ACCEPT', defaultValue: false, description: 'desc')
     }
     stages {
         stage('Print') {
@@ -43,6 +45,19 @@ pipeline
                     else
                     {
                         echo("params.EMPTY: [${params.EMPTY}]")
+                    }
+                }
+            }
+        }
+        stage('Accept')
+        {
+            steps
+            {
+                script
+                {
+                    if (params.ACCEPT != true)
+                    {
+                        error("you should accept before build")
                     }
                 }
             }
