@@ -1,23 +1,5 @@
 pipeline 
 {
-    // options 
-    // { 
-    //     disableConcurrentBuilds() 
-    // }
-    // agent
-    // {
-    //     label 'master'
-    // }
-    // environment
-    // {
-    //     // REPO = "venue"
-    //     // SLACK_CHANNEL = "#venue_team"
-    //     // TOP_DIR = "${env.WORKSPACE}"
-    //     // BUILD_TOP_DIR = "${env.TOP_DIR}/JENKINS_BUILD_DIR"
-    //     // BUILD_DIR = "${env.BUILD_TOP_DIR}/build_${env.BUILD_NUMBER}"
-    //     // BUILD_RESULTS_DIR = "${env.BUILD_DIR}/results"
-    //     // BUILD_LOGS_DIR = "${env.BUILD_DIR}/log"
-    // }
     stages 
     {
         stage('foo')
@@ -32,10 +14,6 @@ pipeline
         }
         stage('bla')
         {
-            // environment
-            // {
-            //     JENKINS_DIR = "${env.TOP_DIR}/jenkins"
-            // }
             steps 
             {
                 script 
@@ -43,79 +21,6 @@ pipeline
                     sh(script: "echo bla")
                 }
             }
-            // post 
-            // {
-            //     always
-            //     {
-            //         script
-            //         {
-            //             if ("${currentBuild.result}" != "SUCCESS")
-            //             {
-            //                 Util.ping("[Automation] [FAILURE]", "#aa0000")
-            //                 error("[Automation] [FAILURE]")
-            //             }
-            //         }
-            //     }
-            // }
         }
     }
-    // post 
-    // {
-    //     always
-    //     {
-    //         script
-    //         {
-    //             Util.notify('#808080', "DONE")
-    //         }
-    //     }
-    //     fixed
-    //     {
-    //         script 
-    //         {
-    //             Util.notify('#00FF00', "FIXED", true)
-    //         }
-    //     }
-    //     aborted
-    //     {
-    //         script
-    //         {
-    //             Util.notify('#FFA500', "ABORTED")
-    //         }
-    //     }
-    //     failure 
-    //     {
-    //         script 
-    //         {
-    //             Util.notify('#DD0000', "FAILURE")
-    //         }
-    //     }
-    //     success 
-    //     {
-    //         script 
-    //         {
-    //             Util.notify('#00FF00', "SUCCESS")
-    //         }
-    //     }
-    //     unstable
-    //     {
-    //         script
-    //         {
-    //             Util.notify('#FFA500', "UNSTABLE")
-    //         }
-    //     }
-    //     unsuccessful
-    //     {
-    //         script
-    //         {
-    //             Util.notify('#FF0000', "FAILED", true)
-    //         }
-    //     }
-    //     cleanup
-    //     {
-    //         script
-    //         {
-    //             Automation.cleanup()
-    //         }
-    //     }
-    // }
 }
