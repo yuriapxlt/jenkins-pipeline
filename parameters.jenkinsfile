@@ -42,7 +42,7 @@ pipeline
                     }
                     else
                     {
-                        echo("params.EMPTY: [${paramas.EMPTY}]")
+                        echo("params.EMPTY: [${params.EMPTY}]")
                     }
                 }
             }
